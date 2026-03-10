@@ -3,201 +3,184 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Grok Video Prompt Engine</title>
-    <!-- Tailwind CSS para estilização rápida -->
+    <title>Grok Prompt Engine - GitHub Ready</title>
+    <!-- Bibliotecas Externas via CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Lucide Icons para interface visual -->
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
-        body { font-family: 'Inter', sans-serif; }
+        body { font-family: 'Inter', sans-serif; background-color: #0a0a0a; }
         .custom-scrollbar::-webkit-scrollbar { width: 6px; }
         .custom-scrollbar::-webkit-scrollbar-track { background: #171717; }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: #3f3f46; border-radius: 10px; }
-        /* Melhoria visual para os checkboxes personalizados */
-        input:checked + .check-box { background-color: #2563eb; border-color: #2563eb; }
-        input:checked + .check-box i { display: block; }
+        .glass-panel { background: rgba(23, 23, 23, 0.8); backdrop-filter: blur(12px); border: 1px solid rgba(63, 63, 70, 0.4); }
     </style>
 </head>
-<body class="bg-neutral-950 text-neutral-100 min-h-screen p-4 md:p-8">
+<body class="text-neutral-100 min-h-screen p-4 md:p-8">
 
     <div class="max-w-5xl mx-auto space-y-6">
-        <!-- Cabeçalho -->
-        <header class="flex items-center space-x-3 pb-6 border-b border-neutral-800">
-            <i data-lucide="wand-2" class="w-8 h-8 text-blue-500"></i>
-            <h1 class="text-2xl font-bold tracking-tight">Grok Prompt Engine <span class="text-xs bg-blue-500/10 text-blue-500 px-2 py-1 rounded ml-2 uppercase tracking-widest font-mono">Pro</span></h1>
+        <!-- Header -->
+        <header class="flex items-center justify-between pb-6 border-b border-neutral-800">
+            <div class="flex items-center space-x-3">
+                <i data-lucide="wand-2" class="w-8 h-8 text-blue-500"></i>
+                <h1 class="text-2xl font-bold tracking-tight text-white">Grok Prompt Engine</h1>
+            </div>
+            <span class="text-[10px] font-mono bg-blue-500/10 text-blue-500 border border-blue-500/20 px-2 py-1 rounded uppercase">v2.1 Stable</span>
         </header>
 
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            <!-- Painel de Controlos -->
-            <section class="space-y-6 bg-neutral-900 p-6 rounded-2xl border border-neutral-800 shadow-xl">
+            <!-- Coluna de Configuração -->
+            <main class="space-y-6 glass-panel p-6 rounded-2xl shadow-2xl">
                 
-                <!-- Ideia -->
+                <!-- Subject Input -->
                 <div class="space-y-2">
-                    <label class="flex items-center space-x-2 text-sm font-semibold text-neutral-400">
+                    <label class="flex items-center space-x-2 text-xs font-bold text-neutral-500 uppercase tracking-widest">
                         <i data-lucide="video" class="w-4 h-4 text-blue-400"></i>
-                        <span>IDEIA DO VÍDEO</span>
+                        <span>Ideia do Vídeo</span>
                     </label>
-                    <textarea id="subject" placeholder="Ex: Um astronauta a caminhar num deserto de cristais..." 
-                        class="w-full bg-neutral-950 border border-neutral-800 rounded-xl p-4 text-sm focus:ring-2 focus:ring-blue-500 outline-none transition-all h-28 resize-none custom-scrollbar"></textarea>
+                    <textarea id="subject" placeholder="Ex: Um gato cibernético saltando entre prédios em Tokyo..." 
+                        class="w-full bg-neutral-950 border border-neutral-800 rounded-xl p-4 text-sm focus:ring-2 focus:ring-blue-500 outline-none transition-all h-28 resize-none custom-scrollbar text-white"></textarea>
                 </div>
 
-                <!-- Referência Media -->
+                <!-- Media Reference -->
                 <div class="space-y-2">
-                    <label class="flex items-center space-x-2 text-sm font-semibold text-neutral-400">
-                        <i data-lucide="image" class="w-4 h-4 text-purple-400"></i>
-                        <span>REFERÊNCIA (IMAGEM OU VÍDEO)</span>
+                    <label class="flex items-center space-x-2 text-xs font-bold text-neutral-500 uppercase tracking-widest">
+                        <i data-lucide="camera" class="w-4 h-4 text-purple-400"></i>
+                        <span>Anexar Referência</span>
                     </label>
                     
                     <div id="upload-zone" class="grid grid-cols-2 gap-3">
-                        <label class="flex flex-col items-center justify-center h-20 border-2 border-dashed border-neutral-800 rounded-xl cursor-pointer hover:bg-neutral-800/30 transition-all group">
-                            <i data-lucide="image-plus" class="w-5 h-5 text-neutral-500 group-hover:text-blue-400"></i>
-                            <span class="text-[10px] mt-1 text-neutral-500">Foto</span>
+                        <label class="flex flex-col items-center justify-center h-24 border-2 border-dashed border-neutral-800 rounded-xl cursor-pointer hover:border-blue-500 hover:bg-blue-500/5 transition-all group">
+                            <i data-lucide="image-plus" class="w-6 h-6 text-neutral-500 group-hover:text-blue-400 mb-1"></i>
+                            <span class="text-[10px] text-neutral-500 group-hover:text-blue-400 font-medium">FOTO</span>
                             <input type="file" id="img-input" class="hidden" accept="image/*">
                         </label>
-                        <label class="flex flex-col items-center justify-center h-20 border-2 border-dashed border-neutral-800 rounded-xl cursor-pointer hover:bg-neutral-800/30 transition-all group">
-                            <i data-lucide="film" class="w-5 h-5 text-neutral-500 group-hover:text-purple-400"></i>
-                            <span class="text-[10px] mt-1 text-neutral-500">Vídeo (Continuidade)</span>
+                        <label class="flex flex-col items-center justify-center h-24 border-2 border-dashed border-neutral-800 rounded-xl cursor-pointer hover:border-purple-500 hover:bg-purple-500/5 transition-all group">
+                            <i data-lucide="film" class="w-6 h-6 text-neutral-500 group-hover:text-purple-400 mb-1"></i>
+                            <span class="text-[10px] text-neutral-500 group-hover:text-purple-400 font-medium text-center leading-tight">VÍDEO<br>(CONTINUIDADE)</span>
                             <input type="file" id="video-input" class="hidden" accept="video/*">
                         </label>
                     </div>
 
-                    <!-- Preview da Referência -->
-                    <div id="preview-container" class="hidden relative group mt-2 bg-neutral-950 p-2 rounded-xl border border-neutral-800 flex items-center gap-4">
-                        <img id="ref-preview" class="h-16 w-16 object-cover rounded-lg border border-neutral-800">
+                    <!-- Preview da Imagem/Vídeo extraído -->
+                    <div id="preview-container" class="hidden relative group mt-3 bg-neutral-950 p-2 rounded-xl border border-neutral-800 flex items-center gap-4 animate-in fade-in slide-in-from-top-2">
+                        <img id="ref-preview" class="h-16 w-16 object-cover rounded-lg border border-neutral-800 bg-black">
                         <div class="flex-1 min-w-0">
-                            <p id="ref-status" class="text-xs font-medium text-blue-400 truncate"></p>
-                            <p class="text-[10px] text-neutral-500">Referência ativa no prompt</p>
+                            <p id="ref-status" class="text-xs font-bold text-blue-400 truncate"></p>
+                            <p class="text-[10px] text-neutral-500 font-medium">Pronto para o prompt</p>
                         </div>
                         <div class="flex gap-1">
-                            <button id="download-ref" class="p-2 hover:bg-neutral-800 rounded-lg text-neutral-400 hover:text-white transition-colors">
+                            <button id="download-ref" class="p-2 hover:bg-neutral-800 rounded-lg text-neutral-400 hover:text-white transition-colors" title="Download">
                                 <i data-lucide="download" class="w-4 h-4"></i>
                             </button>
-                            <button id="remove-ref" class="p-2 hover:bg-red-900/30 rounded-lg text-neutral-400 hover:text-red-400 transition-colors">
+                            <button id="remove-ref" class="p-2 hover:bg-red-900/30 rounded-lg text-neutral-400 hover:text-red-400 transition-colors" title="Remover">
                                 <i data-lucide="x" class="w-4 h-4"></i>
                             </button>
                         </div>
                     </div>
                 </div>
 
-                <!-- Câmara e Áudio -->
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div class="space-y-2">
-                        <label class="text-[10px] font-bold text-neutral-500 uppercase">Estilo de Câmara</label>
-                        <select id="camera" class="w-full bg-neutral-950 border border-neutral-800 rounded-lg p-2.5 text-xs outline-none focus:ring-1 focus:ring-blue-500">
-                            <option value="">Nenhuma específica</option>
-                            <option value="Cinematográfica 4K">Cinematográfica 4K</option>
-                            <option value="Visão de Drone (Aérea)">Visão de Drone</option>
-                            <option value="Macro (Super close-up)">Macro (Close-up)</option>
-                            <option value="Primeira Pessoa (FPV)">Visão FPV</option>
+                <!-- Selects de Estilo -->
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="space-y-1">
+                        <label class="text-[10px] font-bold text-neutral-500 uppercase tracking-tighter">Câmara</label>
+                        <select id="camera" class="w-full bg-neutral-950 border border-neutral-800 rounded-lg p-2.5 text-xs text-white outline-none focus:ring-1 focus:ring-blue-500">
+                            <option value="">Default</option>
+                            <option value="Cinematográfica 4K">Cinematográfica</option>
+                            <option value="Visão de Drone">Drone</option>
+                            <option value="Macro (Close-up)">Macro</option>
+                            <option value="Visão FPV">FPV</option>
                             <option value="Câmara Lenta">Slow Motion</option>
                             <option value="Time-lapse">Time-lapse</option>
                             <option value="Plano Sequência">Plano Sequência</option>
-                            <option value="Zoom in Dinâmico">Zoom in Dinâmico</option>
-                            <option value="Olho de Peixe">Olho de Peixe</option>
-                            <option value="Ângulo Baixo">Ângulo Baixo</option>
-                            <option value="Câmara de Segurança (CCTV)">CCTV Style</option>
+                            <option value="Handheld">Câmara na Mão</option>
                         </select>
                     </div>
-                    <div class="space-y-2">
-                        <label class="text-[10px] font-bold text-neutral-500 uppercase">Música</label>
-                        <select id="music" class="w-full bg-neutral-950 border border-neutral-800 rounded-lg p-2.5 text-xs outline-none focus:ring-1 focus:ring-blue-500">
-                            <option value="">Nenhuma</option>
-                            <option value="Épica / Orquestral">Épica</option>
+                    <div class="space-y-1">
+                        <label class="text-[10px] font-bold text-neutral-500 uppercase tracking-tighter">Áudio</label>
+                        <select id="music" class="w-full bg-neutral-950 border border-neutral-800 rounded-lg p-2.5 text-xs text-white outline-none focus:ring-1 focus:ring-blue-500">
+                            <option value="">Sem Som</option>
+                            <option value="Épica / Orquestral">Épico</option>
                             <option value="Lo-Fi Relaxante">Lo-Fi</option>
-                            <option value="Eletrónica Upbeat">Eletrónica</option>
                             <option value="Suspense Tenso">Suspense</option>
-                            <option value="Acústica">Acústica</option>
+                            <option value="Techno Futurista">Techno AI</option>
                         </select>
                     </div>
                 </div>
 
-                <!-- Voz -->
-                <div class="space-y-2">
-                    <label class="text-[10px] font-bold text-neutral-500 uppercase">Narração (Voz)</label>
-                    <select id="voice" class="w-full bg-neutral-950 border border-neutral-800 rounded-lg p-2.5 text-xs outline-none focus:ring-1 focus:ring-blue-500">
-                        <option value="">Sem narração</option>
-                        <option value="Voz masculina profunda (Trailer)">Masculina (Trailer)</option>
-                        <option value="Voz feminina suave">Feminina Suave</option>
-                        <option value="Voz de documentário (BBC)">Documentário</option>
-                        <option value="Voz de IA futurista">AI Futurista</option>
-                    </select>
-                </div>
-
-                <!-- Tempo e Extras -->
-                <div class="pt-4 border-t border-neutral-800 space-y-4">
+                <!-- Tempo e Botões de Opção -->
+                <div class="pt-6 border-t border-neutral-800 space-y-4">
                     <div class="flex items-center justify-between">
                         <span class="text-xs font-bold text-neutral-500 uppercase tracking-widest">Duração</span>
                         <div class="flex bg-neutral-950 p-1 rounded-lg border border-neutral-800">
-                            <button onclick="setDuration('6')" id="btn-6s" class="px-4 py-1.5 text-xs rounded-md bg-blue-600 text-white transition-all">6s</button>
-                            <button onclick="setDuration('10')" id="btn-10s" class="px-4 py-1.5 text-xs rounded-md text-neutral-500 hover:text-white transition-all">10s</button>
+                            <button onclick="setDuration('6')" id="btn-6s" class="px-5 py-1.5 text-xs rounded-md bg-blue-600 text-white transition-all font-bold">6s</button>
+                            <button onclick="setDuration('10')" id="btn-10s" class="px-5 py-1.5 text-xs rounded-md text-neutral-500 hover:text-white transition-all font-bold">10s</button>
                         </div>
                     </div>
 
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                        <label class="flex items-center p-3 bg-neutral-950 border border-neutral-800 rounded-xl cursor-pointer hover:border-blue-500 transition-all">
+                        <label class="flex items-center p-3 bg-neutral-950 border border-neutral-800 rounded-xl cursor-pointer hover:border-blue-500 transition-all select-none">
                             <input type="checkbox" id="extend" class="hidden">
-                            <div class="w-4 h-4 border-2 border-neutral-700 rounded mr-3 flex items-center justify-center transition-all check-box">
+                            <div class="check-box w-4 h-4 border-2 border-neutral-700 rounded mr-3 flex items-center justify-center transition-all">
                                 <i data-lucide="check" class="w-3 h-3 text-white hidden"></i>
                             </div>
-                            <span class="text-xs font-medium text-neutral-300">Extender Vídeo</span>
+                            <span class="text-[11px] font-semibold text-neutral-300">Extender Vídeo</span>
                         </label>
 
-                        <label class="flex items-center p-3 bg-neutral-950 border border-neutral-800 rounded-xl cursor-pointer hover:border-blue-500 transition-all">
+                        <label class="flex items-center p-3 bg-neutral-950 border border-neutral-800 rounded-xl cursor-pointer hover:border-blue-500 transition-all select-none">
                             <input type="checkbox" id="single" class="hidden">
-                            <div class="w-4 h-4 border-2 border-neutral-700 rounded mr-3 flex items-center justify-center transition-all check-box">
+                            <div class="check-box w-4 h-4 border-2 border-neutral-700 rounded mr-3 flex items-center justify-center transition-all">
                                 <i data-lucide="check" class="w-3 h-3 text-white hidden"></i>
                             </div>
-                            <span class="text-xs font-medium text-neutral-300">Apenas 1 Vídeo</span>
+                            <span class="text-[11px] font-semibold text-neutral-300">Apenas 1 Vídeo</span>
                         </label>
 
-                        <label class="flex items-center p-3 bg-neutral-950 border border-neutral-800 rounded-xl cursor-pointer hover:border-blue-500 transition-all sm:col-span-2">
+                        <label class="flex items-center p-3 bg-neutral-950 border border-neutral-800 rounded-xl cursor-pointer hover:border-blue-500 transition-all select-none sm:col-span-2">
                             <input type="checkbox" id="zoom-face" class="hidden">
-                            <div class="w-4 h-4 border-2 border-neutral-700 rounded mr-3 flex items-center justify-center transition-all check-box">
+                            <div class="check-box w-4 h-4 border-2 border-neutral-700 rounded mr-3 flex items-center justify-center transition-all">
                                 <i data-lucide="check" class="w-3 h-3 text-white hidden"></i>
                             </div>
-                            <span class="text-xs font-medium text-neutral-300">Zoom no Rosto no Final (Fidelidade)</span>
+                            <span class="text-[11px] font-semibold text-neutral-300">Zoom Facial no Final (Fidelidade Sequencial)</span>
                         </label>
                     </div>
                 </div>
-            </section>
+            </main>
 
-            <!-- Painel de Output -->
-            <aside class="flex flex-col space-y-4">
-                <div class="flex-1 bg-neutral-900 border border-neutral-800 rounded-2xl p-6 shadow-xl flex flex-col">
+            <!-- Coluna de Output -->
+            <aside class="flex flex-col h-full">
+                <div class="flex-1 bg-neutral-900 border border-neutral-800 rounded-2xl p-6 shadow-2xl flex flex-col">
                     <div class="flex items-center justify-between mb-4">
-                        <h2 class="text-sm font-bold text-blue-400 flex items-center uppercase tracking-widest">
-                            <i data-lucide="terminal" class="w-4 h-4 mr-2"></i> Prompt Gerado
+                        <h2 class="text-xs font-bold text-blue-400 flex items-center uppercase tracking-widest">
+                            <i data-lucide="terminal" class="w-4 h-4 mr-2"></i> Prompt Grok
                         </h2>
-                        <span id="char-count" class="text-[10px] text-neutral-600 font-mono tracking-tighter">0 CARACTERES</span>
+                        <span id="char-count" class="text-[10px] text-neutral-600 font-mono tracking-tighter">0 CHARS</span>
                     </div>
 
-                    <div id="output" class="flex-1 bg-neutral-950 p-5 rounded-xl border border-neutral-800 text-neutral-300 text-sm leading-relaxed custom-scrollbar overflow-y-auto break-words min-h-[300px]">
-                        Digite algo para começar...
+                    <div id="output" class="flex-1 bg-neutral-950 p-5 rounded-xl border border-neutral-800 text-neutral-400 text-sm leading-relaxed custom-scrollbar overflow-y-auto break-words min-h-[350px] font-mono">
+                        Aguardando entrada...
                     </div>
 
-                    <button id="copy-btn" class="mt-6 w-full py-4 bg-blue-600 hover:bg-blue-500 disabled:opacity-50 disabled:hover:bg-blue-600 text-white rounded-xl font-bold flex items-center justify-center space-x-2 transition-all shadow-lg shadow-blue-900/20 group active:scale-95">
-                        <i data-lucide="copy" class="w-5 h-5 transition-transform"></i>
-                        <span>Copiar Prompt</span>
+                    <button id="copy-btn" class="mt-6 w-full py-4 bg-blue-600 hover:bg-blue-500 disabled:opacity-50 disabled:cursor-not-allowed text-white rounded-xl font-bold flex items-center justify-center space-x-2 transition-all shadow-lg shadow-blue-900/40 active:scale-95">
+                        <i data-lucide="copy" class="w-5 h-5"></i>
+                        <span>Copiar Comando</span>
                     </button>
                 </div>
             </aside>
         </div>
     </div>
 
-    <!-- Hidden Elements for Processing -->
+    <!-- Canvas Escondido -->
     <canvas id="proc-canvas" class="hidden"></canvas>
 
     <script>
-        // Inicialização dos ícones
+        // Init Lucide Icons
         lucide.createIcons();
 
-        // Estado centralizado
+        // App State
         let state = {
             subject: '',
             camera: '',
             music: '',
-            voice: '',
             duration: '6',
             extend: false,
             single: false,
@@ -206,44 +189,38 @@
             isContinuity: false
         };
 
-        // Elementos DOM
-        const subjectEl = document.getElementById('subject');
-        const cameraEl = document.getElementById('camera');
-        const musicEl = document.getElementById('music');
-        const voiceEl = document.getElementById('voice');
-        const extendEl = document.getElementById('extend');
-        const singleEl = document.getElementById('single');
-        const zoomFaceEl = document.getElementById('zoom-face');
-        const imgInput = document.getElementById('img-input');
-        const videoInput = document.getElementById('video-input');
-        const outputEl = document.getElementById('output');
-        const copyBtn = document.getElementById('copy-btn');
-        const previewCont = document.getElementById('preview-container');
-        const refPreview = document.getElementById('ref-preview');
-        const refStatus = document.getElementById('ref-status');
+        // Cache Elements
+        const els = {
+            subject: document.getElementById('subject'),
+            camera: document.getElementById('camera'),
+            music: document.getElementById('music'),
+            extend: document.getElementById('extend'),
+            single: document.getElementById('single'),
+            zoomFace: document.getElementById('zoom-face'),
+            imgInput: document.getElementById('img-input'),
+            videoInput: document.getElementById('video-input'),
+            output: document.getElementById('output'),
+            copyBtn: document.getElementById('copy-btn'),
+            previewContainer: document.getElementById('preview-container'),
+            refPreview: document.getElementById('ref-preview'),
+            refStatus: document.getElementById('ref-status'),
+            canvas: document.getElementById('proc-canvas'),
+            charCount: document.getElementById('char-count')
+        };
 
-        // Funções de atualização de UI
+        // Functions
         function setDuration(val) {
             state.duration = val;
-            const btn6 = document.getElementById('btn-6s');
-            const btn10 = document.getElementById('btn-10s');
+            const b6 = document.getElementById('btn-6s');
+            const b10 = document.getElementById('btn-10s');
             
-            if(val === '6') {
-                btn6.classList.add('bg-blue-600', 'text-white');
-                btn6.classList.remove('text-neutral-500');
-                btn10.classList.remove('bg-blue-600', 'text-white');
-                btn10.classList.add('text-neutral-500');
-            } else {
-                btn10.classList.add('bg-blue-600', 'text-white');
-                btn10.classList.remove('text-neutral-500');
-                btn6.classList.remove('bg-blue-600', 'text-white');
-                btn6.classList.add('text-neutral-500');
-            }
+            b6.className = val === '6' ? 'px-5 py-1.5 text-xs rounded-md bg-blue-600 text-white font-bold' : 'px-5 py-1.5 text-xs rounded-md text-neutral-500 hover:text-white font-bold';
+            b10.className = val === '10' ? 'px-5 py-1.5 text-xs rounded-md bg-blue-600 text-white font-bold' : 'px-5 py-1.5 text-xs rounded-md text-neutral-500 hover:text-white font-bold';
             updatePrompt();
         }
 
         function updateCheckboxes() {
-            [extendEl, singleEl, zoomFaceEl].forEach(el => {
+            [els.extend, els.single, els.zoomFace].forEach(el => {
                 const box = el.parentElement.querySelector('.check-box');
                 const icon = box.querySelector('i');
                 if (el.checked) {
@@ -256,102 +233,133 @@
             });
         }
 
-        // Lógica de Geração de Prompt
         function updatePrompt() {
-            const { subject, camera, music, voice, duration, extend, single, zoomFace, imagePreview, isContinuity } = state;
+            const { subject, camera, music, duration, extend, single, zoomFace, imagePreview, isContinuity } = state;
 
             if (!subject.trim() && !imagePreview) {
-                outputEl.innerText = "Digite a ideia principal ou envie uma referência para começar...";
-                outputEl.classList.add('text-neutral-600');
-                copyBtn.disabled = true;
+                els.output.innerText = "Esperando que você defina a ideia ou faça upload de um ficheiro...";
+                els.output.classList.add('text-neutral-700');
+                els.copyBtn.disabled = true;
                 return;
             }
 
-            outputEl.classList.remove('text-neutral-600');
-            copyBtn.disabled = false;
+            els.output.classList.remove('text-neutral-700');
+            els.copyBtn.disabled = false;
 
-            let partes = [];
+            let prompt = [];
 
             if (imagePreview) {
-                partes.push(isContinuity ? "[Continuar a partir do frame final anexado]." : "[Seguir referências visuais da imagem anexada].");
+                prompt.push(isContinuity ? "[USAR ÚLTIMO FRAME DO VÍDEO ANEXADO COMO PONTO DE PARTIDA]" : "[USAR IMAGEM ANEXADA COMO REFERÊNCIA DE ESTILO E PERSONAGEM]");
             }
 
             if (subject.trim()) {
-                partes.push(`Contexto: ${subject.trim()}.`);
+                prompt.push(`Ação principal: ${subject.trim()}.`);
             } else if (imagePreview) {
-                partes.push(isContinuity ? "Dar continuidade fluida à cena do ficheiro anexado." : "Animar esta imagem com movimento natural.");
+                prompt.push(isContinuity ? "Dar continuidade direta à cena do vídeo." : "Animar esta imagem de forma dinâmica.");
             }
 
-            if (camera) partes.push(`Filmagem: ${camera}.`);
+            if (camera) prompt.push(`Estética de câmara: ${camera}.`);
+            if (music) prompt.push(`Áudio: Incluir trilha sonora ${music.toLowerCase()}.`);
             
-            let audio = [];
-            if (music) audio.push(`banda sonora ${music.toLowerCase()}`);
-            if (voice) audio.push(`narração ${voice.toLowerCase()}`);
-            if (audio.length > 0) partes.push(`Áudio: ${audio.join(' e ')}.`);
-
-            partes.push(`Time: ${duration}s.`);
+            prompt.push(`Duração: ${duration} segundos.`);
             
-            if (extend) partes.push("--extend");
-            if (single) partes.push("Não gerar variações, apenas 1 vídeo final.");
-            if (zoomFace) partes.push("Crucial: Terminar o vídeo com um zoom suave focado no rosto para garantir fidelidade no próximo frame.");
+            if (extend) prompt.push("--extend");
+            if (single) prompt.push("Gerar apenas 1 resultado.");
+            if (zoomFace) prompt.push("Terminar o vídeo obrigatoriamente com um zoom-in focado no rosto para garantir que a próxima cena mantenha a fidelidade total do personagem.");
 
-            const fullPrompt = partes.join(' ');
-            outputEl.innerText = fullPrompt;
-            document.getElementById('char-count').innerText = `${fullPrompt.length} CARACTERES`;
+            const finalString = prompt.join(' ');
+            els.output.innerText = finalString;
+            els.charCount.innerText = `${finalString.length} CHARS`;
         }
 
-        // Event Listeners
-        subjectEl.addEventListener('input', (e) => { state.subject = e.target.value; updatePrompt(); });
-        cameraEl.addEventListener('change', (e) => { state.camera = e.target.value; updatePrompt(); });
-        musicEl.addEventListener('change', (e) => { state.music = e.target.value; updatePrompt(); });
-        voiceEl.addEventListener('change', (e) => { state.voice = e.target.value; updatePrompt(); });
+        // Input Listeners
+        els.subject.oninput = (e) => { state.subject = e.target.value; updatePrompt(); };
+        els.camera.onchange = (e) => { state.camera = e.target.value; updatePrompt(); };
+        els.music.onchange = (e) => { state.music = e.target.value; updatePrompt(); };
         
-        [extendEl, singleEl, zoomFaceEl].forEach(el => {
-            el.addEventListener('change', () => {
+        [els.extend, els.single, els.zoomFace].forEach(el => {
+            el.onchange = () => {
                 state[el.id] = el.checked;
                 updateCheckboxes();
                 updatePrompt();
-            });
-        });
-
-        // Media Processing
-        imgInput.addEventListener('change', (e) => {
-            const file = e.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = (ev) => {
-                    state.imagePreview = ev.target.result;
-                    state.isContinuity = false;
-                    showPreview("Imagem de referência ativa");
-                };
-                reader.readAsDataURL(file);
             }
         });
 
-        videoInput.addEventListener('change', (e) => {
+        // Image Processing
+        els.imgInput.onchange = (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = (ev) => {
+                state.imagePreview = ev.target.result;
+                state.isContinuity = false;
+                renderPreview("Imagem Carregada");
+            };
+            reader.readAsDataURL(file);
+        };
+
+        // Video Processing (The fix for GitHub Pages)
+        els.videoInput.onchange = (e) => {
             const file = e.target.files[0];
             if (!file) return;
 
             const video = document.createElement('video');
-            video.src = URL.createObjectURL(file);
+            const fileURL = URL.createObjectURL(file);
+            
+            video.src = fileURL;
             video.muted = true;
             video.playsInline = true;
-            
+            video.preload = "metadata";
+
+            // Importante para alguns ambientes restringidos
+            document.body.appendChild(video);
+            video.style.display = "none";
+
             video.onloadedmetadata = () => {
-                video.currentTime = Math.max(0, video.duration - 0.1);
+                // Tenta pegar o último frame (diminuindo um pouco para não dar erro de fim de ficheiro)
+                video.currentTime = Math.max(0, video.duration - 0.2);
             };
 
             video.onseeked = () => {
-                const canvas = document.getElementById('proc-canvas');
-                canvas.width = video.videoWidth;
-                canvas.height = video.videoHeight;
-                canvas.getContext('2d').drawImage(video, 0, 0);
-                state.imagePreview = canvas.toDataURL('image/jpeg');
+                const ctx = els.canvas.getContext('2d');
+                els.canvas.width = video.videoWidth;
+                els.canvas.height = video.videoHeight;
+                ctx.drawImage(video, 0, 0);
+                
+                state.imagePreview = els.canvas.toDataURL('image/jpeg', 0.8);
                 state.isContinuity = true;
-                showPreview("Continuidade (Último frame)");
-                URL.revokeObjectURL(video.src);
+                
+                renderPreview("Frame de Continuidade");
+                
+                // Limpeza
+                URL.revokeObjectURL(fileURL);
+                document.body.removeChild(video);
             };
-        });
 
-        function showPreview(text) {
-            previewCont.classList.
+            video.onerror = () => {
+                alert("Erro ao processar o vídeo. Tente outro formato.");
+                document.body.removeChild(video);
+            };
+        };
+
+        function renderPreview(label) {
+            els.previewContainer.classList.remove('hidden');
+            els.refPreview.src = state.imagePreview;
+            els.refStatus.innerText = label;
+            updatePrompt();
+        }
+
+        document.getElementById('remove-ref').onclick = () => {
+            state.imagePreview = null;
+            state.isContinuity = false;
+            els.previewContainer.classList.add('hidden');
+            els.imgInput.value = "";
+            els.videoInput.value = "";
+            updatePrompt();
+        };
+
+        document.getElementById('download-ref').onclick = () => {
+            if (!state.imagePreview) return;
+            const link = document.createElement('a');
+            link.href = state.imagePreview;
+            link.download = state.isContinuity ? "grok_continuity_frame.jpg"
