@@ -4,16 +4,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Grok Prompt Engine - GitHub Ready</title>
-    <!-- Bibliotecas Externas via CDN -->
+
+    <!-- Tailwind via CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Lucide icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
-        body { font-family: 'Inter', sans-serif; background-color: #0a0a0a; }
+        body { font-family: 'Inter', system-ui, sans-serif; background-color: #0a0a0a; }
         .custom-scrollbar::-webkit-scrollbar { width: 6px; }
         .custom-scrollbar::-webkit-scrollbar-track { background: #171717; }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: #3f3f46; border-radius: 10px; }
-        .glass-panel { background: rgba(23, 23, 23, 0.8); backdrop-filter: blur(12px); border: 1px solid rgba(63, 63, 70, 0.4); }
+        .glass-panel { 
+            background: rgba(23, 23, 23, 0.80); 
+            backdrop-filter: blur(12px); 
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(63, 63, 70, 0.45);
+        }
     </style>
 </head>
 <body class="text-neutral-100 min-h-screen p-4 md:p-8">
@@ -32,7 +44,7 @@
             <!-- Coluna de Configuração -->
             <main class="space-y-6 glass-panel p-6 rounded-2xl shadow-2xl">
                 
-                <!-- Subject Input -->
+                <!-- Ideia do Vídeo -->
                 <div class="space-y-2">
                     <label class="flex items-center space-x-2 text-xs font-bold text-neutral-500 uppercase tracking-widest">
                         <i data-lucide="video" class="w-4 h-4 text-blue-400"></i>
@@ -42,45 +54,46 @@
                         class="w-full bg-neutral-950 border border-neutral-800 rounded-xl p-4 text-sm focus:ring-2 focus:ring-blue-500 outline-none transition-all h-28 resize-none custom-scrollbar text-white"></textarea>
                 </div>
 
-                <!-- Media Reference -->
+                <!-- Referência (foto ou vídeo) -->
                 <div class="space-y-2">
                     <label class="flex items-center space-x-2 text-xs font-bold text-neutral-500 uppercase tracking-widest">
                         <i data-lucide="camera" class="w-4 h-4 text-purple-400"></i>
                         <span>Anexar Referência</span>
                     </label>
                     
-                    <div id="upload-zone" class="grid grid-cols-2 gap-3">
+                    <div class="grid grid-cols-2 gap-3">
                         <label class="flex flex-col items-center justify-center h-24 border-2 border-dashed border-neutral-800 rounded-xl cursor-pointer hover:border-blue-500 hover:bg-blue-500/5 transition-all group">
                             <i data-lucide="image-plus" class="w-6 h-6 text-neutral-500 group-hover:text-blue-400 mb-1"></i>
                             <span class="text-[10px] text-neutral-500 group-hover:text-blue-400 font-medium">FOTO</span>
                             <input type="file" id="img-input" class="hidden" accept="image/*">
                         </label>
+
                         <label class="flex flex-col items-center justify-center h-24 border-2 border-dashed border-neutral-800 rounded-xl cursor-pointer hover:border-purple-500 hover:bg-purple-500/5 transition-all group">
                             <i data-lucide="film" class="w-6 h-6 text-neutral-500 group-hover:text-purple-400 mb-1"></i>
                             <span class="text-[10px] text-neutral-500 group-hover:text-purple-400 font-medium text-center leading-tight">VÍDEO<br>(CONTINUIDADE)</span>
-                            <input type="file" id="video-input" class="hidden" accept="video/*">
+                            <input type="file" id="video-input" class="hidden" accept="video/mp4,video/webm">
                         </label>
                     </div>
 
-                    <!-- Preview da Imagem/Vídeo extraído -->
-                    <div id="preview-container" class="hidden relative group mt-3 bg-neutral-950 p-2 rounded-xl border border-neutral-800 flex items-center gap-4 animate-in fade-in slide-in-from-top-2">
-                        <img id="ref-preview" class="h-16 w-16 object-cover rounded-lg border border-neutral-800 bg-black">
+                    <!-- Preview -->
+                    <div id="preview-container" class="hidden relative group mt-3 bg-neutral-950 p-2 rounded-xl border border-neutral-800 flex items-center gap-4">
+                        <img id="ref-preview" class="h-16 w-16 object-cover rounded-lg border border-neutral-800 bg-black" alt="Pré-visualização da referência">
                         <div class="flex-1 min-w-0">
                             <p id="ref-status" class="text-xs font-bold text-blue-400 truncate"></p>
                             <p class="text-[10px] text-neutral-500 font-medium">Pronto para o prompt</p>
                         </div>
                         <div class="flex gap-1">
-                            <button id="download-ref" class="p-2 hover:bg-neutral-800 rounded-lg text-neutral-400 hover:text-white transition-colors" title="Download">
+                            <button id="download-ref" class="p-2 hover:bg-neutral-800 rounded-lg text-neutral-400 hover:text-white transition-colors" title="Download" type="button">
                                 <i data-lucide="download" class="w-4 h-4"></i>
                             </button>
-                            <button id="remove-ref" class="p-2 hover:bg-red-900/30 rounded-lg text-neutral-400 hover:text-red-400 transition-colors" title="Remover">
+                            <button id="remove-ref" class="p-2 hover:bg-red-900/30 rounded-lg text-neutral-400 hover:text-red-400 transition-colors" title="Remover" type="button">
                                 <i data-lucide="x" class="w-4 h-4"></i>
                             </button>
                         </div>
                     </div>
                 </div>
 
-                <!-- Selects de Estilo -->
+                <!-- Estilos -->
                 <div class="grid grid-cols-2 gap-4">
                     <div class="space-y-1">
                         <label class="text-[10px] font-bold text-neutral-500 uppercase tracking-tighter">Câmara</label>
@@ -96,6 +109,7 @@
                             <option value="Handheld">Câmara na Mão</option>
                         </select>
                     </div>
+
                     <div class="space-y-1">
                         <label class="text-[10px] font-bold text-neutral-500 uppercase tracking-tighter">Áudio</label>
                         <select id="music" class="w-full bg-neutral-950 border border-neutral-800 rounded-lg p-2.5 text-xs text-white outline-none focus:ring-1 focus:ring-blue-500">
@@ -108,13 +122,13 @@
                     </div>
                 </div>
 
-                <!-- Tempo e Botões de Opção -->
+                <!-- Duração e opções -->
                 <div class="pt-6 border-t border-neutral-800 space-y-4">
                     <div class="flex items-center justify-between">
                         <span class="text-xs font-bold text-neutral-500 uppercase tracking-widest">Duração</span>
                         <div class="flex bg-neutral-950 p-1 rounded-lg border border-neutral-800">
-                            <button onclick="setDuration('6')" id="btn-6s" class="px-5 py-1.5 text-xs rounded-md bg-blue-600 text-white transition-all font-bold">6s</button>
-                            <button onclick="setDuration('10')" id="btn-10s" class="px-5 py-1.5 text-xs rounded-md text-neutral-500 hover:text-white transition-all font-bold">10s</button>
+                            <button type="button" onclick="setDuration('6')" id="btn-6s" class="px-5 py-1.5 text-xs rounded-md bg-blue-600 text-white font-bold">6s</button>
+                            <button type="button" onclick="setDuration('10')" id="btn-10s" class="px-5 py-1.5 text-xs rounded-md text-neutral-500 hover:text-white font-bold">10s</button>
                         </div>
                     </div>
 
@@ -146,21 +160,21 @@
                 </div>
             </main>
 
-            <!-- Coluna de Output -->
+            <!-- Prompt gerado -->
             <aside class="flex flex-col h-full">
                 <div class="flex-1 bg-neutral-900 border border-neutral-800 rounded-2xl p-6 shadow-2xl flex flex-col">
                     <div class="flex items-center justify-between mb-4">
                         <h2 class="text-xs font-bold text-blue-400 flex items-center uppercase tracking-widest">
                             <i data-lucide="terminal" class="w-4 h-4 mr-2"></i> Prompt Grok
                         </h2>
-                        <span id="char-count" class="text-[10px] text-neutral-600 font-mono tracking-tighter">0 CHARS</span>
+                        <span id="char-count" class="text-[10px] text-neutral-600 font-mono">0 CHARS</span>
                     </div>
 
-                    <div id="output" class="flex-1 bg-neutral-950 p-5 rounded-xl border border-neutral-800 text-neutral-400 text-sm leading-relaxed custom-scrollbar overflow-y-auto break-words min-h-[350px] font-mono">
+                    <div id="output" class="flex-1 bg-neutral-950 p-5 rounded-xl border border-neutral-800 text-neutral-400 text-sm leading-relaxed custom-scrollbar overflow-y-auto break-words min-h-[350px] font-mono whitespace-pre-wrap">
                         Aguardando entrada...
                     </div>
 
-                    <button id="copy-btn" class="mt-6 w-full py-4 bg-blue-600 hover:bg-blue-500 disabled:opacity-50 disabled:cursor-not-allowed text-white rounded-xl font-bold flex items-center justify-center space-x-2 transition-all shadow-lg shadow-blue-900/40 active:scale-95">
+                    <button id="copy-btn" class="mt-6 w-full py-4 bg-blue-600 hover:bg-blue-500 disabled:opacity-50 disabled:cursor-not-allowed text-white rounded-xl font-bold flex items-center justify-center space-x-2 transition-all shadow-lg shadow-blue-900/40 active:scale-95" disabled type="button">
                         <i data-lucide="copy" class="w-5 h-5"></i>
                         <span>Copiar Comando</span>
                     </button>
@@ -169,15 +183,12 @@
         </div>
     </div>
 
-    <!-- Canvas Escondido -->
-    <canvas id="proc-canvas" class="hidden"></canvas>
+    <canvas id="proc-canvas" class="hidden" width="512" height="512"></canvas>
 
     <script>
-        // Init Lucide Icons
         lucide.createIcons();
 
-        // App State
-        let state = {
+        const state = {
             subject: '',
             camera: '',
             music: '',
@@ -189,7 +200,6 @@
             isContinuity: false
         };
 
-        // Cache Elements
         const els = {
             subject: document.getElementById('subject'),
             camera: document.getElementById('camera'),
@@ -208,14 +218,14 @@
             charCount: document.getElementById('char-count')
         };
 
-        // Functions
         function setDuration(val) {
             state.duration = val;
-            const b6 = document.getElementById('btn-6s');
-            const b10 = document.getElementById('btn-10s');
-            
-            b6.className = val === '6' ? 'px-5 py-1.5 text-xs rounded-md bg-blue-600 text-white font-bold' : 'px-5 py-1.5 text-xs rounded-md text-neutral-500 hover:text-white font-bold';
-            b10.className = val === '10' ? 'px-5 py-1.5 text-xs rounded-md bg-blue-600 text-white font-bold' : 'px-5 py-1.5 text-xs rounded-md text-neutral-500 hover:text-white font-bold';
+            document.getElementById('btn-6s').className = val === '6' 
+                ? 'px-5 py-1.5 text-xs rounded-md bg-blue-600 text-white font-bold' 
+                : 'px-5 py-1.5 text-xs rounded-md text-neutral-500 hover:text-white font-bold';
+            document.getElementById('btn-10s').className = val === '10' 
+                ? 'px-5 py-1.5 text-xs rounded-md bg-blue-600 text-white font-bold' 
+                : 'px-5 py-1.5 text-xs rounded-md text-neutral-500 hover:text-white font-bold';
             updatePrompt();
         }
 
@@ -234,10 +244,8 @@
         }
 
         function updatePrompt() {
-            const { subject, camera, music, duration, extend, single, zoomFace, imagePreview, isContinuity } = state;
-
-            if (!subject.trim() && !imagePreview) {
-                els.output.innerText = "Esperando que você defina a ideia ou faça upload de um ficheiro...";
+            if (!state.subject.trim() && !state.imagePreview) {
+                els.output.textContent = "Esperando que você defina a ideia ou faça upload de um ficheiro...";
                 els.output.classList.add('text-neutral-700');
                 els.copyBtn.disabled = true;
                 return;
@@ -246,120 +254,117 @@
             els.output.classList.remove('text-neutral-700');
             els.copyBtn.disabled = false;
 
-            let prompt = [];
+            const parts = [];
 
-            if (imagePreview) {
-                prompt.push(isContinuity ? "[USAR ÚLTIMO FRAME DO VÍDEO ANEXADO COMO PONTO DE PARTIDA]" : "[USAR IMAGEM ANEXADA COMO REFERÊNCIA DE ESTILO E PERSONAGEM]");
+            if (state.imagePreview) {
+                parts.push(state.isContinuity 
+                    ? "[USAR ÚLTIMO FRAME DO VÍDEO ANEXADO COMO PONTO DE PARTIDA]"
+                    : "[USAR IMAGEM ANEXADA COMO REFERÊNCIA DE ESTILO E PERSONAGEM]");
             }
 
-            if (subject.trim()) {
-                prompt.push(`Ação principal: ${subject.trim()}.`);
-            } else if (imagePreview) {
-                prompt.push(isContinuity ? "Dar continuidade direta à cena do vídeo." : "Animar esta imagem de forma dinâmica.");
+            if (state.subject.trim()) {
+                parts.push(`Ação principal: ${state.subject.trim()}.`);
+            } else if (state.imagePreview) {
+                parts.push(state.isContinuity 
+                    ? "Dar continuidade direta à cena do vídeo." 
+                    : "Animar esta imagem de forma dinâmica.");
             }
 
-            if (camera) prompt.push(`Estética de câmara: ${camera}.`);
-            if (music) prompt.push(`Áudio: Incluir trilha sonora ${music.toLowerCase()}.`);
+            if (state.camera)    parts.push(`Estética de câmara: ${state.camera}.`);
+            if (state.music)     parts.push(`Áudio: Incluir trilha sonora ${state.music.toLowerCase()}.`);
             
-            prompt.push(`Duração: ${duration} segundos.`);
+            parts.push(`Duração: ${state.duration} segundos.`);
             
-            if (extend) prompt.push("--extend");
-            if (single) prompt.push("Gerar apenas 1 resultado.");
-            if (zoomFace) prompt.push("Terminar o vídeo obrigatoriamente com um zoom-in focado no rosto para garantir que a próxima cena mantenha a fidelidade total do personagem.");
+            if (state.extend)    parts.push("--extend");
+            if (state.single)    parts.push("Gerar apenas 1 resultado.");
+            if (state.zoomFace)  parts.push("Terminar o vídeo obrigatoriamente com um zoom-in focado no rosto para garantir que a próxima cena mantenha a fidelidade total do personagem.");
 
-            const finalString = prompt.join(' ');
-            els.output.innerText = finalString;
-            els.charCount.innerText = `${finalString.length} CHARS`;
+            const final = parts.join(' ');
+            els.output.textContent = final;
+            els.charCount.textContent = `${final.length} CHARS`;
         }
 
-        // Input Listeners
-        els.subject.oninput = (e) => { state.subject = e.target.value; updatePrompt(); };
-        els.camera.onchange = (e) => { state.camera = e.target.value; updatePrompt(); };
-        els.music.onchange = (e) => { state.music = e.target.value; updatePrompt(); };
-        
+        // Listeners
+        els.subject.addEventListener('input', e => { state.subject = e.target.value; updatePrompt(); });
+        els.camera.addEventListener('change', e => { state.camera = e.target.value; updatePrompt(); });
+        els.music.addEventListener('change', e => { state.music = e.target.value; updatePrompt(); });
+
         [els.extend, els.single, els.zoomFace].forEach(el => {
-            el.onchange = () => {
+            el.addEventListener('change', () => {
                 state[el.id] = el.checked;
                 updateCheckboxes();
                 updatePrompt();
-            }
+            });
         });
 
-        // Image Processing
-        els.imgInput.onchange = (e) => {
-            const file = e.target.files[0];
+        // Imagem
+        els.imgInput.addEventListener('change', e => {
+            const file = e.target.files?.[0];
             if (!file) return;
+
             const reader = new FileReader();
-            reader.onload = (ev) => {
+            reader.onload = ev => {
                 state.imagePreview = ev.target.result;
                 state.isContinuity = false;
-                renderPreview("Imagem Carregada");
+                showPreview("Imagem Carregada");
             };
             reader.readAsDataURL(file);
-        };
+        });
 
-        // Video Processing (The fix for GitHub Pages)
-        els.videoInput.onchange = (e) => {
-            const file = e.target.files[0];
+        // Vídeo → extrair último frame
+        els.videoInput.addEventListener('change', e => {
+            const file = e.target.files?.[0];
             if (!file) return;
 
+            const url = URL.createObjectURL(file);
             const video = document.createElement('video');
-            const fileURL = URL.createObjectURL(file);
-            
-            video.src = fileURL;
+
             video.muted = true;
             video.playsInline = true;
-            video.preload = "metadata";
-
-            // Importante para alguns ambientes restringidos
-            document.body.appendChild(video);
-            video.style.display = "none";
+            video.preload = 'metadata';
+            video.src = url;
+            video.style.position = 'absolute';
+            video.style.opacity = '0';
+            video.style.pointerEvents = 'none';
+            document.body.appendChild(video); // necessário em alguns navegadores
 
             video.onloadedmetadata = () => {
-                // Tenta pegar o último frame (diminuindo um pouco para não dar erro de fim de ficheiro)
-                video.currentTime = Math.max(0, video.duration - 0.2);
+                if (!video.duration || video.duration < 0.1) {
+                    cleanup();
+                    alert("Vídeo inválido ou muito curto.");
+                    return;
+                }
+                video.currentTime = Math.max(0, video.duration - 0.04); // um pouco antes do final
             };
 
             video.onseeked = () => {
-                const ctx = els.canvas.getContext('2d');
-                els.canvas.width = video.videoWidth;
-                els.canvas.height = video.videoHeight;
-                ctx.drawImage(video, 0, 0);
-                
-                state.imagePreview = els.canvas.toDataURL('image/jpeg', 0.8);
-                state.isContinuity = true;
-                
-                renderPreview("Frame de Continuidade");
-                
-                // Limpeza
-                URL.revokeObjectURL(fileURL);
-                document.body.removeChild(video);
+                try {
+                    const ctx = els.canvas.getContext('2d');
+                    els.canvas.width = video.videoWidth;
+                    els.canvas.height = video.videoHeight;
+                    ctx.drawImage(video, 0, 0);
+                    state.imagePreview = els.canvas.toDataURL('image/jpeg', 0.82);
+                    state.isContinuity = true;
+                    showPreview("Frame de Continuidade");
+                } catch (err) {
+                    console.error(err);
+                    alert("Não foi possível extrair o frame do vídeo.");
+                } finally {
+                    cleanup();
+                }
             };
 
             video.onerror = () => {
-                alert("Erro ao processar o vídeo. Tente outro formato.");
-                document.body.removeChild(video);
+                alert("Erro ao carregar o vídeo. Tente formato .mp4 ou .webm.");
+                cleanup();
             };
-        };
 
-        function renderPreview(label) {
+            function cleanup() {
+                URL.revokeObjectURL(url);
+                if (video.parentNode) document.body.removeChild(video);
+            }
+        });
+
+        function showPreview(label) {
             els.previewContainer.classList.remove('hidden');
-            els.refPreview.src = state.imagePreview;
-            els.refStatus.innerText = label;
-            updatePrompt();
-        }
-
-        document.getElementById('remove-ref').onclick = () => {
-            state.imagePreview = null;
-            state.isContinuity = false;
-            els.previewContainer.classList.add('hidden');
-            els.imgInput.value = "";
-            els.videoInput.value = "";
-            updatePrompt();
-        };
-
-        document.getElementById('download-ref').onclick = () => {
-            if (!state.imagePreview) return;
-            const link = document.createElement('a');
-            link.href = state.imagePreview;
-            link.download = state.isContinuity ? "grok_continuity_frame.jpg"
+            els.refPrev
